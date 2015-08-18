@@ -8,13 +8,12 @@ nginx:
     restart: always
 
 dockergen:
-    image: jwilder/docker-gen
+    build: dockergen
     volumes_from:
         - nginx
     volumes:
         - /var/run/docker.sock:/tmp/docker.sock:ro
         - /etc/nginx/certs
-        - nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
     command: >
         -notify-sighup dockerproxy_nginx_1
         -watch -only-published
