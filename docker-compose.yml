@@ -6,9 +6,6 @@ services:
         volumes:
             - /etc/nginx/conf.d
             - ./certs:/etc/nginx/certs
-        networks:
-            - default
-            - sherpa_default
         ports:
             - "80:80"
             - "443:443"
@@ -21,16 +18,9 @@ services:
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - /etc/nginx/certs
-        networks:
-            - default
-            - sherpa_default
         command: >
             -notify-sighup dockerproxy_nginx_1
             -watch -only-published
             /etc/docker-gen/templates/nginx.tmpl
             /etc/nginx/conf.d/default.conf
         restart: always
-
-networks:
-    sherpa_default:
-        external: true
